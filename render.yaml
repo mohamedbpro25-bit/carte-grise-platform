@@ -1,0 +1,108 @@
+services:
+  - type: pserv
+    runtime: image
+    name: cartegrise-mysql
+    plan: starter
+    image:
+      url: docker.io/mysql:8
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 10
+    envVars:
+      - key: MYSQL_DATABASE
+        value: cartegrise
+      - key: MYSQL_USER
+        value: cartegrise
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_ROOT_PASSWORD
+        sync: false
+
+  - type: web
+    runtime: node
+    name: cartegrise-backend
+    rootDir: backend
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start:prod
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DB_TYPE
+        value: mysql
+      - key: DB_HOST
+        fromService:
+          name: cartegrise-mysql
+          type: pserv
+          property: host
+      - key: DB_PORT
+        fromService:
+          name: cartegrise-mysql
+          type: pserv
+          property: port
+      - key: DB_DATABASE
+        value: cartegrise
+      - key: DB_USERNAME
+        value: cartegrise
+      - key: DB_PASSWORD
+        fromService:
+          name: cartegrise-mysql
+          type: pserv
+          envVarKey: MYSQL_PASSWORD
+      - key: DB_SYNCHRONIZE
+        value: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PAYMENTS_MODE
+        value: mock
+      - key: REQUIRE_EMAIL_VERIFICATION
+        value: false
+      - key: UPLOADS_DIR
+        value: /opt/render/project/src/uploads
+      - key: FRONTEND_URL
+        sync: false
+      - key: BACKEND_URL
+        sync: false
+      - key: SIV_API_URL
+        value: https://api.siv.gouv.fr/v1
+      - key: SIV_API_KEY
+        sync: false
+      - key: PLAQUE_API_URL
+        value: https://api.siv.gouv.fr/v1
+      - key: PLAQUE_API_KEY
+        sync: false
+    disk:
+      name: backend-uploads
+      mountPath: /opt/render/project/src/uploads
+      sizeGB: 5
+
+  - type: web
+    runtime: node
+    name: cartegrise-frontend
+    rootDir: frontend
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        value: /api
+      - key: BACKEND_HOSTPORT
+        fromService:
+          name: cartegrise-backend
+          type: web
+          property: hostport
+      - key: NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+        value: pk_test_demo

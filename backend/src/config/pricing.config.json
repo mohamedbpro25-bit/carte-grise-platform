@@ -1,0 +1,106 @@
+{
+  "version": "2024-2025",
+  "lastUpdated": "2024-12-15",
+  "source": "ANTS - Administration Nationale des Titres Sécurisés",
+  "fixed_fees": {
+    "ants_fee": 11.00,
+    "postage_fee": 2.50
+  },
+  "regional_rates": {
+    "auvergne-rhone-alpes": {
+      "name": "Auvergne-Rhône-Alpes",
+      "rate_per_cv": 44.00,
+      "departments": ["01", "03", "07", "15", "26", "38", "42", "43", "63", "69", "73", "74"]
+    },
+    "bourgogne-franche-comte": {
+      "name": "Bourgogne-Franche-Comté",
+      "rate_per_cv": 39.20,
+      "departments": ["21", "25", "39", "58", "70", "71", "89", "90"]
+    },
+    "bretagne": {
+      "name": "Bretagne",
+      "rate_per_cv": 51.00,
+      "departments": ["22", "29", "35", "56"]
+    },
+    "centre-val-de-loire": {
+      "name": "Centre-Val de Loire",
+      "rate_per_cv": 49.80,
+      "departments": ["18", "28", "36", "37", "41", "45"]
+    },
+    "corse": {
+      "name": "Corse",
+      "rate_per_cv": 27.00,
+      "departments": ["20"]
+    },
+    "grand-est": {
+      "name": "Grand Est",
+      "rate_per_cv": 42.00,
+      "departments": ["08", "10", "51", "52", "54", "55", "57", "67", "68", "88"]
+    },
+    "guadeloupe": {
+      "name": "Guadeloupe",
+      "rate_per_cv": 34.50,
+      "departments": ["971"]
+    },
+    "guyane": {
+      "name": "Guyane",
+      "rate_per_cv": 28.00,
+      "departments": ["973"]
+    },
+    "hauts-de-france": {
+      "name": "Hauts-de-France",
+      "rate_per_cv": 39.20,
+      "departments": ["02", "59", "60", "62", "80"]
+    },
+    "ile-de-france": {
+      "name": "Île-de-France",
+      "rate_per_cv": 46.15,
+      "departments": ["75", "77", "78", "91", "92", "93", "94", "95"]
+    },
+    "la-reunion": {
+      "name": "La Réunion",
+      "rate_per_cv": 31.00,
+      "departments": ["974"]
+    },
+    "martinique": {
+      "name": "Martinique",
+      "rate_per_cv": 35.00,
+      "departments": ["972"]
+    },
+    "mayotte": {
+      "name": "Mayotte",
+      "rate_per_cv": 31.50,
+      "departments": ["976"]
+    },
+    "normandie": {
+      "name": "Normandie",
+      "rate_per_cv": 35.00,
+      "departments": ["14", "27", "50", "61", "76"]
+    },
+    "nouvelle-aquitaine": {
+      "name": "Nouvelle-Aquitaine",
+      "rate_per_cv": 41.00,
+      "departments": ["16", "17", "19", "23", "24", "33", "40", "47", "64", "79", "86", "87"]
+    },
+    "occitanie": {
+      "name": "Occitanie",
+      "rate_per_cv": 44.00,
+      "departments": ["09", "11", "12", "30", "31", "32", "34", "46", "48", "65", "66", "81", "82"]
+    },
+    "pays-de-la-loire": {
+      "name": "Pays de la Loire",
+      "rate_per_cv": 48.00,
+      "departments": ["44", "49", "53", "72", "85"]
+    },
+    "provence-alpes-cote-d-azur": {
+      "name": "Provence-Alpes-Côte d'Azur",
+      "rate_per_cv": 51.20,
+      "departments": ["04", "05", "06", "13", "83", "84"]
+    }
+  },
+  "notes": {
+    "calculation": "Total = (puissance_fiscale × regional_rate) + ants_fee + postage_fee",
+    "puissance_fiscale": "Exprimée en chevaux-vapeur (CV) - visible sur le certificat d'immatriculation",
+    "rounding": "Arrondir à 2 décimales"
+  }
+}

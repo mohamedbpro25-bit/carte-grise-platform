@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <!-- Shadow -->
+  <rect x="2" y="2" width="156" height="68" rx="10" fill="#00000018"/>
+  <!-- Card background -->
+  <rect x="0" y="0" width="156" height="68" rx="10" fill="white"/>
+  <!-- Left green accent bar -->
+  <rect x="0" y="0" width="6" height="68" rx="3" fill="#1a7f37"/>
+  <!-- Top border -->
+  <rect x="6" y="0" width="150" height="4" rx="0" fill="#1a7f37"/>
+  <rect x="150" y="0" width="6" height="4" rx="3" fill="#1a7f37"/>
+  <!-- Lock / shield icon circle -->
+  <circle cx="32" cy="38" r="20" fill="#1a7f37"/>
+  <!-- Shield path inside circle (simple) -->
+  <path d="M32 22 L42 26 L42 38 Q42 46 32 52 Q22 46 22 38 L22 26 Z" fill="white" opacity="0.9"/>
+  <!-- Checkmark inside shield -->
+  <polyline points="26,38 30,43 38,33" fill="none" stroke="#1a7f37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Main text -->
+  <text x="60" y="28" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#1a7f37">Habilité ANTS</text>
+  <text x="60" y="44" font-family="Arial, Helvetica, sans-serif" font-size="9.5" fill="#555555">Agence Nationale des Titres</text>
+  <text x="60" y="58" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#888888">Sécurisés — Ministère Intérieur</text>
+</svg>

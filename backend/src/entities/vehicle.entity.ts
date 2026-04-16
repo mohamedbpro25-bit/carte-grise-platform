@@ -1,0 +1,3 @@
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm'; import { Dossier } from './dossier.entity';
+@Entity('vehicles')
+export class Vehicle { @PrimaryGeneratedColumn('uuid') id: string; @ManyToOne(() => Dossier, dossier => dossier.vehicles) @JoinColumn({ name: 'dossier_id' }) dossier: Dossier; @Column() immatriculation: string; @Column() marque: string; @Column() modele: string; @Column({ name: 'puissance_fiscale' }) puissanceFiscale: number; @Column() energie: string; @Column() annee: number; }

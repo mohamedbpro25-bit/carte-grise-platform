@@ -1,0 +1,2 @@
+import { Module } from '@nestjs/common'; import { HttpModule } from '@nestjs/axios'; import { VehiculesController } from './vehicules.controller'; import { VehiculesService } from './vehicules.service';
+@Module({ imports: [HttpModule], controllers: [VehiculesController], providers: [VehiculesService], exports: [VehiculesService] }) export class VehiculesModule {}

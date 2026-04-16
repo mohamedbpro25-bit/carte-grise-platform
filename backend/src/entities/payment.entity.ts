@@ -1,0 +1,4 @@
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm'; import { Dossier } from './dossier.entity';
+export enum PaymentStatus { PENDING = 'en_attente', SUCCEEDED = 'paye', FAILED = 'echoue' }
+@Entity('payments')
+export class Payment { @PrimaryGeneratedColumn('uuid') id: string; @ManyToOne(() => Dossier, dossier => dossier.payments) @JoinColumn({ name: 'dossier_id' }) dossier: Dossier; @Column('decimal', { precision: 10, scale: 2 }) montant: number; @Column({ type: 'enum', enum: PaymentStatus, default: PaymentStatus.PENDING }) statut: PaymentStatus; @Column({ name: 'stripe_session_id', nullable: true }) stripeSessionId: string; @CreateDateColumn({ name: 'created_at' }) createdAt: Date; }

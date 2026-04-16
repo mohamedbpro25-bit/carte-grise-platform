@@ -1,0 +1,3 @@
+import { Type } from 'class-transformer'; import { IsEnum, IsOptional, IsNumber, IsObject, Min } from 'class-validator'; import { DemarcheType, DossierStatus } from '../../../entities/dossier.entity';
+export class CreateDossierDto { @IsEnum(DemarcheType) typeDemande!: DemarcheType; @IsOptional() @Type(() => Number) @IsNumber() @Min(0) prixTotal?: number; @IsOptional() @Type(() => Number) @IsNumber() @Min(1) currentStep?: number; @IsOptional() @IsEnum(DossierStatus) statut?: DossierStatus; @IsOptional() @IsObject() formData?: Record<string, unknown>; }
+export class UpdateDossierStepDto { @Type(() => Number) @IsNumber() @Min(1) currentStep!: number; @IsOptional() @IsObject() formData?: Record<string, unknown>; @IsOptional() @IsEnum(DossierStatus) statut?: DossierStatus; }
