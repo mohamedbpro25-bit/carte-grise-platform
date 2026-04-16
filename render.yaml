@@ -1,27 +1,11 @@
-services:
-  - type: pserv
-    runtime: image
-    name: cartegrise-mysql
-    plan: starter
-    image:
-      url: docker.io/mysql:8
-    disk:
-      name: mysql-data
-      mountPath: /var/lib/mysql
-      sizeGB: 10
-    envVars:
-      - key: MYSQL_DATABASE
-        value: cartegrise
-      - key: MYSQL_USER
-        value: cartegrise
-      - key: MYSQL_PASSWORD
-        sync: false
-      - key: MYSQL_ROOT_PASSWORD
-        sync: false
+## render.yaml — Plan Starter (toujours actif) + FreeSQLDatabase externe (pas de MySQL Render)
+## Coût : ~7$/mois pour backend starter + ~7$/mois pour frontend starter + 5GB disk uploads
+## Base de données : FreeSQLDatabase gratuite externe (sql7.freesqldatabase.com)
 
+services:
   - type: web
     runtime: node
-    name: cartegrise-backend
+    name: certicarte-backend
     rootDir: backend
     plan: starter
     region: frankfurt
@@ -39,24 +23,15 @@ services:
       - key: DB_TYPE
         value: mysql
       - key: DB_HOST
-        fromService:
-          name: cartegrise-mysql
-          type: pserv
-          property: host
+        value: sql7.freesqldatabase.com
       - key: DB_PORT
-        fromService:
-          name: cartegrise-mysql
-          type: pserv
-          property: port
+        value: 3306
       - key: DB_DATABASE
-        value: cartegrise
+        value: sql7823235
       - key: DB_USERNAME
-        value: cartegrise
+        value: sql7823235
       - key: DB_PASSWORD
-        fromService:
-          name: cartegrise-mysql
-          type: pserv
-          envVarKey: MYSQL_PASSWORD
+        value: spiQTQBNxd
       - key: DB_SYNCHRONIZE
         value: false
       - key: JWT_SECRET
@@ -79,16 +54,29 @@ services:
         value: https://api.siv.gouv.fr/v1
       - key: PLAQUE_API_KEY
         sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        value: no-reply@certicarte.fr
+      - key: STRIPE_SECRET_KEY
+        sync: false
     disk:
-      name: backend-uploads
+      name: certicarte-uploads
       mountPath: /opt/render/project/src/uploads
       sizeGB: 5
 
   - type: web
     runtime: node
-    name: cartegrise-frontend
+    name: certicarte-frontend
     rootDir: frontend
-    plan: free
+    plan: starter
+    region: frankfurt
     buildCommand: npm ci && npm run build
     startCommand: npm run start
     autoDeployTrigger: commit
@@ -101,8 +89,8 @@ services:
         value: /api
       - key: BACKEND_HOSTPORT
         fromService:
-          name: cartegrise-backend
+          name: certicarte-backend
           type: web
           property: hostport
       - key: NEXT_PUBLIC_STRIPE_PUBLIC_KEY
-        value: pk_test_demo
+        sync: false
