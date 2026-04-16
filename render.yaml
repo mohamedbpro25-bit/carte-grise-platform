@@ -43,29 +43,29 @@ services:
       - key: UPLOADS_DIR
         value: /opt/render/project/src/uploads
       - key: FRONTEND_URL
-        sync: false
+        value: https://certicarte-frontend.onrender.com
       - key: BACKEND_URL
-        sync: false
+        value: https://certicarte-backend.onrender.com
       - key: SIV_API_URL
         value: https://api.siv.gouv.fr/v1
       - key: SIV_API_KEY
-        sync: false
+        value: test
       - key: PLAQUE_API_URL
         value: https://api.siv.gouv.fr/v1
       - key: PLAQUE_API_KEY
-        sync: false
+        value: test
       - key: SMTP_HOST
-        sync: false
+        value: smtp.gmail.com
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        sync: false
+        value: demo@certicarte.fr
       - key: SMTP_PASS
-        sync: false
+        value: app-password-placeholder
       - key: SMTP_FROM
         value: no-reply@certicarte.fr
       - key: STRIPE_SECRET_KEY
-        sync: false
+        value: sk_test_placeholder
     disk:
       name: certicarte-uploads
       mountPath: /opt/render/project/src/uploads
@@ -93,4 +93,4 @@ services:
           type: web
           property: hostport
       - key: NEXT_PUBLIC_STRIPE_PUBLIC_KEY
-        sync: false
+        value: pk_test_placeholder
