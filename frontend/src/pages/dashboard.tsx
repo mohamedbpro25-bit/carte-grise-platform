@@ -55,7 +55,7 @@ export default function Dashboard() {
   return (
     <>
       <Head>
-        <title>Mon compte - Carte Grise Express</title>
+        <title>Mon compte - CertiCarte</title>
       </Head>
       <div className="container-custom py-12">
         <div className="max-w-4xl mx-auto">

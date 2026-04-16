@@ -7,7 +7,7 @@ function Footer() {
       <div className="container-custom py-14">
         <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
-            <h3 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-blue-700 bg-clip-text text-transparent">CarteGrise France</h3>
+            <h3 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-blue-700 bg-clip-text text-transparent">CertiCarte</h3>
             <p className="mt-3 text-sm text-slate-700 leading-relaxed">Plateforme de confiance pour vos démarches carte grise. Rapide, claire et conforme aux procédures officielles.</p>
             <p className="mt-4 text-xs font-bold uppercase tracking-wider text-blue-600">République Française</p>
           </div>
@@ -36,7 +36,7 @@ function Footer() {
             <h4 className="font-bold text-slate-900 text-lg">Contact & Support</h4>
             <ul className="mt-4 space-y-3 text-sm">
               <li><a href="tel:+33123456789" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">01 23 45 67 89</a></li>
-              <li><a href="mailto:contact@cartegrise-france.fr" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">contact@cartegrise-france.fr</a></li>
+              <li><a href="mailto:contact@certicarte.fr" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">contact@certicarte.fr</a></li>
               <li className="text-slate-700 font-medium">Lun–Sam : 8h30 – 19h00</li>
             </ul>
           </div>
@@ -55,7 +55,7 @@ function Footer() {
             <img src="/badge-ants.svg" alt="Habilité ANTS" className="h-14 drop-shadow-sm hover:drop-shadow-md transition-all" />
             <img src="/badge-securite.svg" alt="Paiement sécurisé" className="h-14 drop-shadow-sm hover:drop-shadow-md transition-all" />
           </div>
-          <p className="text-xs font-medium text-slate-600">© 2026 <span className="font-bold text-slate-900">CarteGrise France</span> — Tous droits réservés. Plateforme sécurisée</p>
+          <p className="text-xs font-medium text-slate-600">© 2026 <span className="font-bold text-slate-900">CertiCarte</span> — Tous droits réservés. Plateforme sécurisée</p>
         </div>
       </div>
     </footer>

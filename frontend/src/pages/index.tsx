@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>CarteGrise France | Démarches en ligne</title>
+        <title>CertiCarte | Démarches en ligne</title>
         <meta name="description" content="Plateforme de démarches carte grise en ligne : simulation, documents, suivi et paiement sécurisé. Agréé par l'État." />
       </Head>
 

@@ -28,7 +28,7 @@ export default function VerifyEmailPage() {
 
   return (
     <>
-      <Head><title>Verification email - Carte Grise Express</title></Head>
+      <Head><title>Verification email - CertiCarte</title></Head>
       <div className="container-custom py-12 max-w-xl">
         <div className="bg-white rounded-xl shadow-lg p-8 text-center">
           <h1 className="text-2xl font-bold mb-4">Verification email</h1>

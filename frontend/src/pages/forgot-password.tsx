@@ -25,7 +25,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <>
-      <Head><title>Mot de passe oublie - Carte Grise Express</title></Head>
+      <Head><title>Mot de passe oublie - CertiCarte</title></Head>
       <div className="container-custom py-12 max-w-md">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <h1 className="text-2xl font-bold text-center mb-6">Mot de passe oublie</h1>

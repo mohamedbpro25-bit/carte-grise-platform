@@ -29,11 +29,11 @@ export default function Login() {
   }
   return (
     <>
-      <Head><title>Connexion - Carte Grise Express</title></Head>
+      <Head><title>Connexion - CertiCarte</title></Head>
       <div className="container-custom py-12 max-w-md">
         <div className="rounded-3xl border-2 border-slate-200 bg-gradient-to-br from-white via-blue-50/40 to-white shadow-xl p-8">
           <h1 className="text-3xl font-extrabold text-center bg-gradient-to-r from-slate-900 to-blue-700 bg-clip-text text-transparent mb-2">Connexion sécurisée</h1>
-          <p className="text-center text-slate-600 font-medium mb-8">Accédez à votre compte CarteGrise France</p>
+          <p className="text-center text-slate-600 font-medium mb-8">Accédez à votre compte CertiCarte</p>
           <form onSubmit={handleSubmit} className="space-y-5">
             <Input label="📧 Email" type="email" required placeholder="votre@email.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
             <Input label="🔐 Mot de passe" type="password" required placeholder="Minimum 6 caractères" value={formData.password} onChange={(e) => setFormData({...formData, password: e.target.value})} />

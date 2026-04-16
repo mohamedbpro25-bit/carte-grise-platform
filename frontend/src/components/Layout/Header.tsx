@@ -50,7 +50,7 @@ function Header() {
     <header className="sticky top-0 z-50 border-b border-slate-200/50 bg-gradient-to-r from-white via-blue-50/30 to-white/90 backdrop-blur-2xl shadow-sm">
       <nav className="container-custom flex flex-wrap items-center justify-between gap-4 py-4">
         <Link href="/" className="text-2xl font-black tracking-tight bg-gradient-to-r from-slate-900 via-blue-700 to-red-600 bg-clip-text text-transparent hover:from-blue-700 hover:via-slate-900 hover:to-red-700 transition-all">
-          CarteGrise <span className="font-black">France</span>
+          CertiCarte
         </Link>
 
         <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700">

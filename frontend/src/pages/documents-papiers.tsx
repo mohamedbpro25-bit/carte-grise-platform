@@ -77,7 +77,7 @@ export default function DocumentsPapiersPage({ docs }: Props) {
   return (
     <>
       <Head>
-        <title>Documents et papiers - Carte Grise Express</title>
+        <title>Documents et papiers - CertiCarte</title>
         <meta name="description" content="Telechargez les documents carte grise a imprimer (PDF)." />
       </Head>
 

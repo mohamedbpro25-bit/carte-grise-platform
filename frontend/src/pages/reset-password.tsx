@@ -38,7 +38,7 @@ export default function ResetPasswordPage() {
 
   return (
     <>
-      <Head><title>Reinitialiser mot de passe - Carte Grise Express</title></Head>
+      <Head><title>Reinitialiser mot de passe - CertiCarte</title></Head>
       <div className="container-custom py-12 max-w-md">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <h1 className="text-2xl font-bold text-center mb-6">Nouveau mot de passe</h1>

@@ -494,7 +494,7 @@ export default function Admin() {
 
   return (
     <>
-      <Head><title>Admin - Carte Grise Express</title></Head>
+      <Head><title>Admin - CertiCarte</title></Head>
       <div className="container-custom py-10">
         <h1 className="mb-6 text-3xl font-bold text-slate-900">Espace administrateur</h1>
 

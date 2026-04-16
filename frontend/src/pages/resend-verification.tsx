@@ -25,7 +25,7 @@ export default function ResendVerificationPage() {
 
   return (
     <>
-      <Head><title>Renvoyer verification email - Carte Grise Express</title></Head>
+      <Head><title>Renvoyer verification email - CertiCarte</title></Head>
       <div className="container-custom py-12 max-w-md">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <h1 className="text-2xl font-bold text-center mb-6">Renvoyer verification</h1>

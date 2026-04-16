@@ -33,7 +33,7 @@ export default function Suivi() {
   }
   return (
     <>
-      <Head><title>Suivi de dossier - Carte Grise Express</title></Head>
+      <Head><title>Suivi de dossier - CertiCarte</title></Head>
       <div className="container-custom py-12 max-w-2xl">
         <h1 className="text-3xl font-bold text-center mb-8">Suivi de dossier</h1>
         <div className="bg-white rounded-xl shadow-lg p-6">

@@ -24,10 +24,10 @@ export default function Register() {
   }
   return (
     <>
-      <Head><title>Inscription - Carte Grise Express</title></Head>
+      <Head><title>Inscription - CertiCarte</title></Head>
       <div className="container-custom py-12 max-w-md">
         <div className="rounded-3xl border-2 border-slate-200 bg-gradient-to-br from-white via-blue-50/40 to-white shadow-xl p-8">
-          <h1 className="text-3xl font-extrabold text-center bg-gradient-to-r from-slate-900 to-blue-700 bg-clip-text text-transparent mb-2">Votre compte CarteGrise</h1>
+          <h1 className="text-3xl font-extrabold text-center bg-gradient-to-r from-slate-900 to-blue-700 bg-clip-text text-transparent mb-2">Votre compte CertiCarte</h1>
           <p className="text-center text-slate-600 font-medium mb-8">Inscrivez-vous en 2 minutes pour gérer vos démarches</p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">

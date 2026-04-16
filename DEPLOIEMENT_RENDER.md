@@ -2,6 +2,14 @@
 
 Cette version correspond a votre besoin de test: le site est publie sur Render sans Docker a gerer de votre cote.
 
+## Cout minimal a prevoir
+
+Cette configuration n'est pas 100% gratuite sur Render, parce que votre application a besoin de stockage persistant:
+
+- `cartegrise-mysql` en `starter`
+- `cartegrise-backend` en `starter` pour conserver les documents uploades sur disque
+- `cartegrise-frontend` peut rester en `free`
+
 ## Ce que j'ai prepare
 
 - `render.yaml` pour creer automatiquement:
@@ -52,7 +60,7 @@ Une fois les URLs Render creees:
 
 ## Limites de cette mise en ligne test
 
-- les services `free` peuvent etre lents au reveil
+- le frontend `free` peut etre lent au reveil
 - MySQL sur Render utilise un disque, pas une base managée MySQL native
 - pour une vraie production, il faudra durcir la config email, paiement, sauvegardes et domaine
 

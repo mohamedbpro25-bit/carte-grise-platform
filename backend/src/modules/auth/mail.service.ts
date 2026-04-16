@@ -41,7 +41,7 @@ export class MailService {
     }
 
     await this.transporter.sendMail({
-      from: this.config.get<string>('SMTP_FROM') || 'no-reply@cartegrise.local',
+      from: this.config.get<string>('SMTP_FROM') || 'no-reply@certicarte.local',
       to: email,
       subject: 'Verification de votre email',
       html: `<p>Bonjour,</p><p>Confirmez votre email: <a href="${verifyLink}">${verifyLink}</a></p><p>Fallback API: <a href="${verifyApiLink}">${verifyApiLink}</a></p>`,
@@ -58,7 +58,7 @@ export class MailService {
     }
 
     await this.transporter.sendMail({
-      from: this.config.get<string>('SMTP_FROM') || 'no-reply@cartegrise.local',
+      from: this.config.get<string>('SMTP_FROM') || 'no-reply@certicarte.local',
       to: email,
       subject: 'Reinitialisation de mot de passe',
       html: `<p>Bonjour,</p><p>Reinitialisez votre mot de passe: <a href="${resetLink}">${resetLink}</a></p>`,

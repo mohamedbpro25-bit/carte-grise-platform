@@ -23,7 +23,7 @@ services:
     runtime: node
     name: cartegrise-backend
     rootDir: backend
-    plan: free
+    plan: starter
     region: frankfurt
     buildCommand: npm ci && npm run build
     startCommand: npm run start:prod

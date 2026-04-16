@@ -55,7 +55,7 @@ export default function ModalitesPage() {
   return (
     <>
       <Head>
-        <title>Modalités — CarteGrise France</title>
+        <title>Modalités — CertiCarte</title>
         <meta name="description" content="Choisissez votre démarche et accédez directement à l'étape 2 de la procédure carte grise." />
       </Head>
 
