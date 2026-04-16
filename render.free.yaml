@@ -1,0 +1,92 @@
+## render.free.yaml — Déploiement 100% GRATUIT sur Render (sans carte bancaire)
+## MySQL externe requis : https://www.freesqldatabase.com (gratuit, sans CB)
+##
+## Instructions :
+##   render blueprint deploy --file render.free.yaml
+##   OU sur render.com → New → Blueprint → choisir ce fichier
+
+services:
+  - type: web
+    runtime: node
+    name: certicarte-backend
+    rootDir: backend
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start:prod
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DB_TYPE
+        value: mysql
+      - key: DB_HOST
+        sync: false          # Remplis avec l'hôte FreeSQLDatabase ou autre
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        sync: false          # Nom de ta base MySQL externe
+      - key: DB_USERNAME
+        sync: false          # Utilisateur MySQL externe
+      - key: DB_PASSWORD
+        sync: false          # Mot de passe MySQL externe
+      - key: DB_SYNCHRONIZE
+        value: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PAYMENTS_MODE
+        value: stripe        # Mettre "mock" pour tester sans Stripe
+      - key: STRIPE_SECRET_KEY
+        sync: false          # Clé secrète Stripe (tableau de bord Stripe)
+      - key: REQUIRE_EMAIL_VERIFICATION
+        value: true
+      - key: SMTP_HOST
+        sync: false          # Ex: smtp.gmail.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USER
+        sync: false          # Ton adresse email SMTP
+      - key: SMTP_PASS
+        sync: false          # Mot de passe SMTP ou App Password Google
+      - key: SMTP_FROM
+        value: no-reply@certicarte.fr
+      - key: FRONTEND_URL
+        sync: false          # URL de ton frontend Render ex: https://certicarte-frontend.onrender.com
+      - key: BACKEND_URL
+        sync: false          # URL de ton backend Render ex: https://certicarte-backend.onrender.com
+      - key: UPLOADS_DIR
+        value: /tmp/uploads  # /tmp est le seul dossier writable sur Render free
+      - key: SIV_API_KEY
+        value: test
+      - key: PLAQUE_API_KEY
+        value: test
+
+  - type: web
+    runtime: node
+    name: certicarte-frontend
+    rootDir: frontend
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: certicarte-backend
+          type: web
+          property: host
+      - key: NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+        sync: false          # Clé publique Stripe (pk_live_... ou pk_test_...)
+      - key: BACKEND_HOSTPORT
+        fromService:
+          name: certicarte-backend
+          type: web
+          property: hostport

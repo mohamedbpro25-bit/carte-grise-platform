@@ -25,10 +25,10 @@ function Footer() {
           <div>
             <h4 className="font-bold text-slate-900 text-lg">Infos légales</h4>
             <ul className="mt-4 space-y-3 text-sm">
-              <li><a href="#" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">Mentions légales</a></li>
-              <li><a href="#" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">CGV</a></li>
-              <li><a href="#" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">Politique de confidentialité</a></li>
-              <li><a href="#" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">RGPD</a></li>
+              <li><Link href="/mentions-legales" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">Mentions légales</Link></li>
+              <li><Link href="/cgv" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">CGV</Link></li>
+              <li><Link href="/politique-confidentialite" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">Politique de confidentialité</Link></li>
+              <li><Link href="/politique-confidentialite#droits" className="text-slate-700 hover:text-blue-700 hover:font-semibold transition-colors">RGPD — Vos droits</Link></li>
             </ul>
           </div>
 
@@ -50,10 +50,10 @@ function Footer() {
 
         {/* Barre de confiance officielle */}
         <div className="mt-8 border-t-2 border-slate-200 pt-6 flex flex-wrap items-center justify-between gap-6">
-          <div className="flex flex-wrap gap-4 items-center">
-            <img src="/badge-agree-etat.svg" alt="Agréé par l'État" className="h-14 drop-shadow-sm hover:drop-shadow-md transition-all" />
-            <img src="/badge-ants.svg" alt="Habilité ANTS" className="h-14 drop-shadow-sm hover:drop-shadow-md transition-all" />
-            <img src="/badge-securite.svg" alt="Paiement sécurisé" className="h-14 drop-shadow-sm hover:drop-shadow-md transition-all" />
+          <div className="flex flex-wrap gap-3 items-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-800">🔒 Paiement sécurisé SSL</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-green-200 bg-green-50 px-3 py-1.5 text-xs font-bold text-green-800">✅ Données chiffrées</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-700">🇫🇷 Service français</span>
           </div>
           <p className="text-xs font-medium text-slate-600">© 2026 <span className="font-bold text-slate-900">CertiCarte</span> — Tous droits réservés. Plateforme sécurisée</p>
         </div>

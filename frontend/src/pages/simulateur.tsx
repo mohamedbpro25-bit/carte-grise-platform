@@ -32,7 +32,7 @@ export default function Simulateur() {
   }
   return (
     <>
-      <Head><title>Simulateur - Calculez le prix de votre carte grise</title></Head>
+      <Head><title>Simulateur de prix — CertiCarte</title></Head>
       <div className="container-custom py-16">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
