@@ -55,13 +55,13 @@ services:
       - key: PLAQUE_API_KEY
         value: test
       - key: SMTP_HOST
-        value: smtp.gmail.com
+        value: ""
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        value: demo@certicarte.fr
+        value: ""
       - key: SMTP_PASS
-        value: app-password-placeholder
+        value: ""
       - key: SMTP_FROM
         value: no-reply@certicarte.fr
       - key: STRIPE_SECRET_KEY
