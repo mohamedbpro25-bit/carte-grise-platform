@@ -1,7 +1,9 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common'; import { ConfigService } from '@nestjs/config'; import { InjectRepository } from '@nestjs/typeorm'; import { Repository } from 'typeorm'; import Stripe from 'stripe'; import { Payment, PaymentStatus } from '../../entities/payment.entity'; import { Dossier, DossierStatus } from '../../entities/dossier.entity'; import { AuditService } from '../audit/audit.service';
+import { Injectable, NotFoundException, BadRequestException, Logger } from '@nestjs/common'; import { ConfigService } from '@nestjs/config'; import { InjectRepository } from '@nestjs/typeorm'; import { Repository } from 'typeorm'; import Stripe from 'stripe'; import { Payment, PaymentStatus } from '../../entities/payment.entity'; import { Dossier, DossierStatus } from '../../entities/dossier.entity'; import { AuditService } from '../audit/audit.service';
+import { MailService } from '../auth/mail.service';
 
 @Injectable()
 export class PaiementService {
+  private readonly logger = new Logger(PaiementService.name);
   private stripe: Stripe;
   private paymentsMode: 'stripe' | 'mock';
 
@@ -12,6 +14,7 @@ export class PaiementService {
     private dossierRepo: Repository<Dossier>,
     private config: ConfigService,
     private auditService: AuditService,
+    private mailService: MailService,
   ) {
     this.paymentsMode = (this.config.get<string>('PAYMENTS_MODE') || 'stripe') as 'stripe' | 'mock';
     const secret = this.config.get<string>('STRIPE_SECRET_KEY');
@@ -20,6 +23,25 @@ export class PaiementService {
         throw new Error('STRIPE_SECRET_KEY is not defined');
       }
       this.stripe = new Stripe(secret, { apiVersion: '2023-10-16' });
+    }
+  }
+
+  private async trySendOrderConfirmation(dossier: Dossier, mode: 'mock' | 'stripe') {
+    const email = dossier.user?.email;
+    if (!email) return;
+
+    try {
+      await this.mailService.sendOrderConfirmationEmail({
+        email,
+        firstName: dossier.user?.firstName,
+        dossierNumero: dossier.numero,
+        modalite: dossier.typeDemande,
+        montant: Number(dossier.prixTotal),
+        dossierId: dossier.id,
+        paymentMode: mode,
+      });
+    } catch (error) {
+      this.logger.error(`Echec envoi email commande pour dossier ${dossier.numero}`, error as any);
     }
   }
 
@@ -48,6 +70,8 @@ export class PaiementService {
         resourceId: payment.id,
         details: { dossierId: dossier.id, mode: 'mock' },
       });
+
+      await this.trySendOrderConfirmation(dossier, 'mock');
 
       return { url: successUrl };
     }
@@ -111,7 +135,7 @@ export class PaiementService {
       const dossierId = session.metadata?.dossierId;
 
       if (stripeSessionId) {
-        const payment = await this.paymentRepo.findOne({ where: { stripeSessionId }, relations: ['dossier'] });
+        const payment = await this.paymentRepo.findOne({ where: { stripeSessionId }, relations: ['dossier', 'dossier.user'] });
         if (payment) {
           payment.statut = PaymentStatus.SUCCEEDED;
           await this.paymentRepo.save(payment);
@@ -125,6 +149,8 @@ export class PaiementService {
             resourceId: payment.id,
             details: { stripeSessionId, dossierId: payment.dossier.id },
           });
+
+          await this.trySendOrderConfirmation(payment.dossier, 'stripe');
         }
       }
     }

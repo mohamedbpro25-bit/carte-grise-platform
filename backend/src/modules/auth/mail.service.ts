@@ -64,4 +64,45 @@ export class MailService {
       html: `<p>Bonjour,</p><p>Reinitialisez votre mot de passe: <a href="${resetLink}">${resetLink}</a></p>`,
     });
   }
+
+  async sendOrderConfirmationEmail(params: {
+    email: string;
+    firstName?: string;
+    dossierNumero: string;
+    modalite: string;
+    montant: number;
+    dossierId: string;
+    paymentMode: 'mock' | 'stripe';
+  }): Promise<void> {
+    const { frontendUrl } = this.getBaseUrls();
+    const dashboardLink = `${frontendUrl}/dashboard`;
+    const suiviLink = `${frontendUrl}/suivi`;
+    const safeMontant = Number(params.montant || 0).toFixed(2);
+
+    if (!this.transporter) {
+      this.logger.warn(`SMTP non configure. Email commande non envoye pour ${params.email} (dossier ${params.dossierNumero})`);
+      return;
+    }
+
+    await this.transporter.sendMail({
+      from: this.config.get<string>('SMTP_FROM') || 'no-reply@certicarte.local',
+      to: params.email,
+      subject: `Confirmation de commande ${params.dossierNumero}`,
+      html: `
+        <p>Bonjour ${params.firstName || ''},</p>
+        <p>Votre commande CertiCarte a bien ete enregistree.</p>
+        <ul>
+          <li><strong>Numero de dossier :</strong> ${params.dossierNumero}</li>
+          <li><strong>Modalite :</strong> ${params.modalite}</li>
+          <li><strong>Montant paye :</strong> ${safeMontant} EUR</li>
+          <li><strong>Mode de paiement :</strong> ${params.paymentMode}</li>
+        </ul>
+        <p>Vous pouvez suivre votre dossier ici :</p>
+        <p><a href="${dashboardLink}">${dashboardLink}</a></p>
+        <p>Ou consulter le suivi public :</p>
+        <p><a href="${suiviLink}">${suiviLink}</a></p>
+        <p>Merci pour votre confiance.</p>
+      `,
+    });
+  }
 }

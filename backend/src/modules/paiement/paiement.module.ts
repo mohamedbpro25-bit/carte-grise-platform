@@ -1,2 +1,3 @@
 import { Module } from '@nestjs/common'; import { TypeOrmModule } from '@nestjs/typeorm'; import { ConfigModule } from '@nestjs/config'; import { Payment } from '../../entities/payment.entity'; import { Dossier } from '../../entities/dossier.entity'; import { PaiementController } from './paiement.controller'; import { PaiementService } from './paiement.service'; import { AuditModule } from '../audit/audit.module';
-@Module({ imports: [ConfigModule, AuditModule, TypeOrmModule.forFeature([Payment, Dossier])], controllers: [PaiementController], providers: [PaiementService] }) export class PaiementModule {}
+import { AuthModule } from '../auth/auth.module';
+@Module({ imports: [ConfigModule, AuditModule, AuthModule, TypeOrmModule.forFeature([Payment, Dossier])], controllers: [PaiementController], providers: [PaiementService] }) export class PaiementModule {}
