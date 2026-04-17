@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, ConflictException, BadRequestException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, BadRequestException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
@@ -11,6 +11,8 @@ import { AuditService } from '../audit/audit.service';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private jwtService: JwtService,
@@ -18,10 +20,12 @@ export class AuthService {
     private auditService: AuditService,
   ) {}
 
+  private isSmtpConfigured() {
+    return !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+  }
+
   private isEmailVerificationRequired() {
-    const forceVerify = process.env.REQUIRE_EMAIL_VERIFICATION === 'true';
-    const smtpConfigured = !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
-    return forceVerify || smtpConfigured;
+    return process.env.REQUIRE_EMAIL_VERIFICATION === 'true';
   }
 
   private isProfileComplete(user: Pick<User, 'firstName' | 'lastName' | 'phone' | 'address'>) {
@@ -57,8 +61,12 @@ export class AuthService {
     });
 
     await this.userRepository.save(user);
-    if (requireVerification && verificationToken) {
-      await this.mailService.sendVerificationEmail(user.email, verificationToken);
+    if (requireVerification && verificationToken && this.isSmtpConfigured()) {
+      try {
+        await this.mailService.sendVerificationEmail(user.email, verificationToken);
+      } catch (error) {
+        this.logger.error(`Impossible d'envoyer l'email de verification pour ${user.email}`, error as any);
+      }
     }
     await this.auditService.log({
       actorUserId: user.id,
