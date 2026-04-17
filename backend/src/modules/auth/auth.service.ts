@@ -61,11 +61,18 @@ export class AuthService {
     });
 
     await this.userRepository.save(user);
-    if (requireVerification && verificationToken && this.isSmtpConfigured()) {
+    const smtpConfigured = this.isSmtpConfigured();
+    if (requireVerification && verificationToken && smtpConfigured) {
       try {
         await this.mailService.sendVerificationEmail(user.email, verificationToken);
       } catch (error) {
         this.logger.error(`Impossible d'envoyer l'email de verification pour ${user.email}`, error as any);
+      }
+    } else if (!requireVerification && smtpConfigured) {
+      try {
+        await this.mailService.sendWelcomeEmail(user.email, user.firstName);
+      } catch (error) {
+        this.logger.error(`Impossible d'envoyer l'email de bienvenue pour ${user.email}`, error as any);
       }
     }
     await this.auditService.log({

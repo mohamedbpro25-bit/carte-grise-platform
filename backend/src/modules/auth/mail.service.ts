@@ -65,6 +65,28 @@ export class MailService {
     });
   }
 
+  async sendWelcomeEmail(email: string, firstName?: string): Promise<void> {
+    const { frontendUrl } = this.getBaseUrls();
+    const dashboardLink = `${frontendUrl}/dashboard`;
+
+    if (!this.transporter) {
+      this.logger.warn(`SMTP non configure. Email bienvenue non envoye pour ${email}`);
+      return;
+    }
+
+    await this.transporter.sendMail({
+      from: this.config.get<string>('SMTP_FROM') || 'no-reply@certicarte.local',
+      to: email,
+      subject: 'Bienvenue sur CertiCarte',
+      html: `
+        <p>Bonjour ${firstName || ''},</p>
+        <p>Votre compte CertiCarte est cree et actif.</p>
+        <p>Accedez a votre espace client : <a href="${dashboardLink}">${dashboardLink}</a></p>
+        <p>Merci pour votre confiance.</p>
+      `,
+    });
+  }
+
   async sendOrderConfirmationEmail(params: {
     email: string;
     firstName?: string;
