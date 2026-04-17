@@ -20,7 +20,16 @@ export class MailService {
         secure: port === 465,
         auth: { user, pass },
       });
+
+      this.transporter
+        .verify()
+        .then(() => this.logger.log('SMTP configure et pret a envoyer des emails'))
+        .catch((error) => this.logger.error('SMTP configure mais verification echouee', error as any));
     }
+  }
+
+  private getFromAddress() {
+    return this.config.get<string>('SMTP_FROM') || this.config.get<string>('SMTP_USER') || 'no-reply@certicarte.local';
   }
 
   private getBaseUrls() {
@@ -40,12 +49,16 @@ export class MailService {
       return;
     }
 
-    await this.transporter.sendMail({
-      from: this.config.get<string>('SMTP_FROM') || 'no-reply@certicarte.local',
-      to: email,
-      subject: 'Verification de votre email',
-      html: `<p>Bonjour,</p><p>Confirmez votre email: <a href="${verifyLink}">${verifyLink}</a></p><p>Fallback API: <a href="${verifyApiLink}">${verifyApiLink}</a></p>`,
-    });
+    try {
+      await this.transporter.sendMail({
+        from: this.getFromAddress(),
+        to: email,
+        subject: 'Verification de votre email',
+        html: `<p>Bonjour,</p><p>Confirmez votre email: <a href="${verifyLink}">${verifyLink}</a></p><p>Fallback API: <a href="${verifyApiLink}">${verifyApiLink}</a></p>`,
+      });
+    } catch (error) {
+      this.logger.error(`Echec envoi email verification vers ${email}`, error as any);
+    }
   }
 
   async sendResetPasswordEmail(email: string, resetToken: string): Promise<void> {
@@ -57,12 +70,16 @@ export class MailService {
       return;
     }
 
-    await this.transporter.sendMail({
-      from: this.config.get<string>('SMTP_FROM') || 'no-reply@certicarte.local',
-      to: email,
-      subject: 'Reinitialisation de mot de passe',
-      html: `<p>Bonjour,</p><p>Reinitialisez votre mot de passe: <a href="${resetLink}">${resetLink}</a></p>`,
-    });
+    try {
+      await this.transporter.sendMail({
+        from: this.getFromAddress(),
+        to: email,
+        subject: 'Reinitialisation de mot de passe',
+        html: `<p>Bonjour,</p><p>Reinitialisez votre mot de passe: <a href="${resetLink}">${resetLink}</a></p>`,
+      });
+    } catch (error) {
+      this.logger.error(`Echec envoi email reset vers ${email}`, error as any);
+    }
   }
 
   async sendWelcomeEmail(email: string, firstName?: string): Promise<void> {
@@ -74,17 +91,21 @@ export class MailService {
       return;
     }
 
-    await this.transporter.sendMail({
-      from: this.config.get<string>('SMTP_FROM') || 'no-reply@certicarte.local',
-      to: email,
-      subject: 'Bienvenue sur CertiCarte',
-      html: `
-        <p>Bonjour ${firstName || ''},</p>
-        <p>Votre compte CertiCarte est cree et actif.</p>
-        <p>Accedez a votre espace client : <a href="${dashboardLink}">${dashboardLink}</a></p>
-        <p>Merci pour votre confiance.</p>
-      `,
-    });
+    try {
+      await this.transporter.sendMail({
+        from: this.getFromAddress(),
+        to: email,
+        subject: 'Bienvenue sur CertiCarte',
+        html: `
+          <p>Bonjour ${firstName || ''},</p>
+          <p>Votre compte CertiCarte est cree et actif.</p>
+          <p>Accedez a votre espace client : <a href="${dashboardLink}">${dashboardLink}</a></p>
+          <p>Merci pour votre confiance.</p>
+        `,
+      });
+    } catch (error) {
+      this.logger.error(`Echec envoi email bienvenue vers ${email}`, error as any);
+    }
   }
 
   async sendOrderConfirmationEmail(params: {
@@ -106,25 +127,29 @@ export class MailService {
       return;
     }
 
-    await this.transporter.sendMail({
-      from: this.config.get<string>('SMTP_FROM') || 'no-reply@certicarte.local',
-      to: params.email,
-      subject: `Confirmation de commande ${params.dossierNumero}`,
-      html: `
-        <p>Bonjour ${params.firstName || ''},</p>
-        <p>Votre commande CertiCarte a bien ete enregistree.</p>
-        <ul>
-          <li><strong>Numero de dossier :</strong> ${params.dossierNumero}</li>
-          <li><strong>Modalite :</strong> ${params.modalite}</li>
-          <li><strong>Montant paye :</strong> ${safeMontant} EUR</li>
-          <li><strong>Mode de paiement :</strong> ${params.paymentMode}</li>
-        </ul>
-        <p>Vous pouvez suivre votre dossier ici :</p>
-        <p><a href="${dashboardLink}">${dashboardLink}</a></p>
-        <p>Ou consulter le suivi public :</p>
-        <p><a href="${suiviLink}">${suiviLink}</a></p>
-        <p>Merci pour votre confiance.</p>
-      `,
-    });
+    try {
+      await this.transporter.sendMail({
+        from: this.getFromAddress(),
+        to: params.email,
+        subject: `Confirmation de commande ${params.dossierNumero}`,
+        html: `
+          <p>Bonjour ${params.firstName || ''},</p>
+          <p>Votre commande CertiCarte a bien ete enregistree.</p>
+          <ul>
+            <li><strong>Numero de dossier :</strong> ${params.dossierNumero}</li>
+            <li><strong>Modalite :</strong> ${params.modalite}</li>
+            <li><strong>Montant paye :</strong> ${safeMontant} EUR</li>
+            <li><strong>Mode de paiement :</strong> ${params.paymentMode}</li>
+          </ul>
+          <p>Vous pouvez suivre votre dossier ici :</p>
+          <p><a href="${dashboardLink}">${dashboardLink}</a></p>
+          <p>Ou consulter le suivi public :</p>
+          <p><a href="${suiviLink}">${suiviLink}</a></p>
+          <p>Merci pour votre confiance.</p>
+        `,
+      });
+    } catch (error) {
+      this.logger.error(`Echec envoi email commande vers ${params.email} (${params.dossierNumero})`, error as any);
+    }
   }
 }
